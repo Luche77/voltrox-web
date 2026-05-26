@@ -453,14 +453,14 @@ section:first-of-type { border-top: none; }
   border: 1px solid var(--line);
   overflow: hidden;
 }
-.about-photo::before {
-  content: "[ FOTO COACH ]";
+.about-photo::before { display: none; }
+.about-photo img {
   position: absolute;
-  top: 16px; left: 16px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--ink-faint);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 .about-photo-silhouette {
   position: absolute;
@@ -512,7 +512,7 @@ section:first-of-type { border-top: none; }
 }
 .stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 0;
   margin-top: 12px;
   border-top: 1px solid var(--line);
@@ -1394,7 +1394,7 @@ section:first-of-type { border-top: none; }
   .contact-grid { grid-template-columns: 1fr; }
   .contact-side + .contact-side { border-left: none; border-top: 1px solid var(--line); }
   .form-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr 1fr 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
   .exercise-table td { padding: 12px 16px; font-size: 13px; }
   .exercise-table thead th { padding: 10px 16px; }
   .exercise-table td.rest { font-size: 11px; }
@@ -1444,7 +1444,7 @@ section:first-of-type { border-top: none; }
   <div class="wrap hero-inner">
 
     <div class="hero-meta reveal">
-      <span class="eyebrow">EST. 2021 · Online Coaching</span>
+      <span class="eyebrow">EST. 2026 · Online Coaching</span>
       <span class="hero-loc"><strong>100% Online</strong> · Worldwide</span>
     </div>
 
@@ -1497,15 +1497,7 @@ section:first-of-type { border-top: none; }
       <div class="about-photo">
         <span class="corner tl"></span><span class="corner tr"></span>
         <span class="corner bl"></span><span class="corner br"></span>
-        <div class="about-photo-silhouette">
-          <svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-            <g fill="none" stroke="#F0EDE8" stroke-width="0.5" opacity="0.55">
-              <circle cx="100" cy="55" r="28"/>
-              <path d="M70 95 Q100 88 130 95 L138 180 Q138 200 130 215 L122 275 M70 95 L62 180 Q62 200 70 215 L78 275 M70 95 Q100 110 130 95"/>
-              <path d="M65 105 L40 165 M135 105 L160 165"/>
-            </g>
-          </svg>
-        </div>
+        <img src="perfil.jpeg" alt="Nehemias Bou Sleiman — Coach" />
         <span class="tag">
           <span>COACH // 01</span>
           <span style="color:var(--ink-dim)">NEHEMIAS B.S.</span>
@@ -1525,11 +1517,7 @@ section:first-of-type { border-top: none; }
 
         <div class="stats">
           <div class="stat">
-            <div class="num"><em>500</em>+</div>
-            <div class="lbl">Alumnos</div>
-          </div>
-          <div class="stat">
-            <div class="num">05<em>.</em></div>
+            <div class="num">03<em>.</em></div>
             <div class="lbl">Años de Experiencia</div>
           </div>
           <div class="stat">
@@ -1840,19 +1828,19 @@ section:first-of-type { border-top: none; }
         <p>El primer contacto es gratis y sin compromiso. Charlamos sobre dónde estás, a dónde querés llegar y qué necesitás para lograrlo.</p>
 
         <div class="social-btns">
-          <a href="https://wa.me/TUNUMERO" target="_blank" rel="noopener" class="btn-social wa">
+          <a href="https://wa.me/5492477618128" target="_blank" rel="noopener" class="btn-social wa">
             <span class="icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.5-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.9-2.1-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.2 3 .1.2 2 3.1 4.9 4.4 1.8.8 2.5.9 3.4.7.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.4 5.3L2 22l4.8-1.4C8.4 21.5 10.1 22 12 22c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
             </span>
             <span>WhatsApp</span>
-            <span class="meta">+XX XXX XXX</span>
+            <span class="meta">+54 9 2477 618128</span>
           </a>
-          <a href="https://instagram.com/TUUSUARIO" target="_blank" rel="noopener" class="btn-social">
+          <a href="https://www.instagram.com/nemybousleiman/" target="_blank" rel="noopener" class="btn-social">
             <span class="icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
             </span>
             <span>Instagram</span>
-            <span class="meta">@voltrox</span>
+            <span class="meta">@nemybousleiman</span>
           </a>
         </div>
 
