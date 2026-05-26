@@ -11,7 +11,7 @@ Landing page de una sola página para **Voltrox Athletics**, el negocio de coach
 ## Cuentas y accesos
 - **GitHub:** Luche77 / repo: `voltrox-web`
 - **Vercel:** cuenta `lucasdetorro` / proyecto `voltrox-web`
-- **URL producción:** https://voltrox-web-two.vercel.app
+- **URL producción:** https://voltrox-athletics.vercel.app
 
 ## Deploy workflow
 ```
@@ -40,7 +40,7 @@ Editar index.html → git add . → git commit -m "mensaje" → git push → Ver
 ## Planes actuales y precios
 | Plan | Precio |
 |---|---|
-| Asesoría 1 a 1 (12 semanas) | $450.000 |
+| Asesoría 1 a 1 (12 semanas) | $360.000 |
 | Hipertrofia x2 por semana | $27.500 |
 | Hipertrofia x3 por semana | $30.000 |
 | Hipertrofia x4 por semana | $35.000 |
