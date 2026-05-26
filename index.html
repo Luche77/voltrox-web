@@ -1040,15 +1040,8 @@ section:first-of-type { border-top: none; }
   border: none;
   border-right: 1px solid var(--line);
   margin-bottom: 0;
-  grid-template-columns: 1fr;
 }
 .premium-grid .plan-feat:last-child { border-right: none; }
-.premium-grid .plan-feat-img {
-  height: 340px;
-  min-height: unset;
-  border-right: none;
-  border-bottom: 1px solid var(--line);
-}
 .plan-feat-img {
   position: relative;
   min-height: 360px;
@@ -1226,7 +1219,7 @@ section:first-of-type { border-top: none; }
   background-repeat: no-repeat;
 }
 .hipert-card-img .hi-num {
-  display: none;
+  display: block;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 80px;
@@ -1415,7 +1408,6 @@ section:first-of-type { border-top: none; }
   .premium-grid { grid-template-columns: 1fr; }
   .premium-grid .plan-feat { border-right: none; border-bottom: 1px solid var(--line); }
   .premium-grid .plan-feat:last-child { border-bottom: none; }
-  .premium-grid .plan-feat-img { height: 220px; }
   .plan-feat { grid-template-columns: 1fr; }
   .plan-feat-img { min-height: 220px; border-right: none; border-bottom: 1px solid var(--line); }
   .hipert-grid { grid-template-columns: repeat(2, 1fr); }

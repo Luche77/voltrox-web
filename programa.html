@@ -297,9 +297,9 @@ main { flex: 1; }
   margin-bottom: 10px;
 }
 .pd-price {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(44px, 6vw, 72px);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 60px);
   line-height: 1;
   color: var(--ink);
   letter-spacing: -0.02em;
@@ -489,6 +489,70 @@ main { flex: 1; }
   .btn-big, .btn-ghost { justify-content: center; }
 }
 
+/* ---------- Rich content ---------- */
+.pd-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pd-content h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.pd-content p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-dim);
+}
+.pd-content .sec-head {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-top: 8px;
+}
+.pd-content ul,
+.pd-content ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: steps;
+}
+.pd-content ul li,
+.pd-content ol li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.pd-content ul li::before {
+  content: "■";
+  color: var(--orange);
+  flex-shrink: 0;
+  font-size: 9px;
+  margin-top: 5px;
+}
+.pd-content ol li { counter-increment: steps; }
+.pd-content ol li::before {
+  content: counter(steps) ".";
+  color: var(--orange);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 20px;
+}
+
 /* ---------- Routine section ---------- */
 .pd-routine {
   margin-top: 64px;
@@ -673,14 +737,9 @@ main { flex: 1; }
           </div>
         </div>
 
-        <!-- Right: includes + CTA -->
+        <!-- Right: content + CTA -->
         <div class="pd-right">
-          <div>
-            <div class="pd-incl-label">
-              <span class="eyebrow">// Qué incluye</span>
-            </div>
-            <ul class="pd-incl" id="pd-incl"></ul>
-          </div>
+          <div class="pd-content" id="pd-content"></div>
           <div class="pd-cta-wrap">
             <a id="pd-wa" href="#" target="_blank" rel="noopener" class="btn-big">
               <span>Solicitar por WhatsApp</span><span class="arrow">→</span>
@@ -689,20 +748,6 @@ main { flex: 1; }
           </div>
         </div>
 
-      </div>
-
-      <!-- Routine section (hipertrofia plans) -->
-      <div class="pd-routine reveal" id="pd-routine" style="display:none">
-        <div class="pd-routine-head">
-          <span class="eyebrow">// Rutina completa</span>
-          <p>Ejercicios, series, repeticiones y descanso para cada día de entrenamiento.</p>
-        </div>
-        <div id="pd-days"></div>
-      </div>
-
-      <!-- Custom plan note (asesoria / personalizado) -->
-      <div class="pd-routine reveal" id="pd-routine-note" style="display:none">
-        <div class="pd-routine-note" id="pd-routine-note-text"></div>
       </div>
 
       <!-- Not found (hidden by default) -->
@@ -738,19 +783,25 @@ const PLANS = {
     price: '$450.000',
     priceOld: null,
     priceNote: '// 12 semanas de acompañamiento completo',
-    duration: '12 semanas',
-    frequency: 'A medida',
-    includes: [
-      'Rutina diseñada 100% a medida',
-      'Llamadas de seguimiento semanales',
-      'Plan nutricional incluido',
-      'Chat directo con el coach',
-      'Ajustes continuos según tu progreso',
-    ],
+    duration: '12 SEMANAS',
+    frequency: 'A MEDIDA',
+    contentHtml: `<h2>ASESORÍA 1 A 1 PERSONALIZADA – 12 SEMANAS</h2>
+<p>Este es el programa más completo que podés hacer con Nemi. No solo recibís un plan hecho a tu medida, sino que contás con acompañamiento real en cada etapa para hacer los ajustes necesarios y llegar a tus objetivos de la forma más eficiente posible.</p>
+<div class="sec-head">// ¿QUÉ INCLUYE?</div>
+<ul>
+<li>Plan de entrenamiento diseñado especialmente para vos</li>
+<li>Plan de alimentación adaptado a tu rutina y estilo de vida</li>
+<li>Evaluación inicial completa para conocer tu punto de partida</li>
+<li>Seguimiento personalizado durante las 12 semanas</li>
+</ul>
+<div class="sec-head">// ACCESO DIRECTO A NEMI</div>
+<ul>
+<li>Llamadas 1 a 1 en vivo según tu disponibilidad</li>
+<li>Consultas y dudas respondidas en tiempo real por WhatsApp</li>
+<li>Ajustes continuos para que siempre estés avanzando</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa la Asesoría 1 a 1 (12 semanas). ¿Podemos hablar?',
     tag: 'PLAN PREMIUM',
-    routine: null,
-    routineNote: 'Este plan no tiene una rutina fija — la rutina se diseña 100% a medida para vos y se ajusta semana a semana durante las 12 semanas de seguimiento directo.',
   },
 
   'personalizado': {
@@ -760,18 +811,28 @@ const PLANS = {
     price: '$ — — —', /* TODO: agregar precio */
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: '12 semanas',
-    frequency: 'A medida',
-    includes: [
-      'Rutina diseñada a medida según tus objetivos',
-      'Adaptada a tu equipamiento disponible',
-      'Adaptada a tu disponibilidad horaria',
-      'Acceso permanente a tu rutina',
-    ],
+    duration: '12 SEMANAS',
+    frequency: 'A MEDIDA',
+    contentHtml: `<h2>PLAN PERSONALIZADO – TRANSFORMACIÓN 12 SEMANAS</h2>
+<p>Este no es un plan más. Es un proceso construido por Nemi desde cero, pensado únicamente para vos. A través de un formulario completo, Nemi va a conocer tu situación actual, tus metas, tu día a día y tu estilo de vida para diseñar un plan de entrenamiento y alimentación que se ajuste a tu realidad.</p>
+<div class="sec-head">// ¿QUÉ INCLUYE?</div>
+<ul>
+<li>Plan de entrenamiento diseñado según tu nivel, disponibilidad y objetivos</li>
+<li>Plan de alimentación adaptado a tus gustos, hábitos y rutina diaria</li>
+<li>Progresión estructurada a lo largo de las 12 semanas</li>
+<li>Acompañamiento directo con Nemi durante todo el proceso</li>
+</ul>
+<div class="sec-head">// ¿PARA QUIÉN ES?</div>
+<p>Para quienes quieren resultados de verdad y un plan que puedan mantener a largo plazo. Sin importar si estás arrancando de cero o si ya tenés experiencia previa.</p>
+<div class="sec-head">// ¿CÓMO FUNCIONA?</div>
+<ol>
+<li>Adquirís el plan</li>
+<li>Completás un formulario con tu información personal y objetivos</li>
+<li>Nemi diseña tu plan a medida en base a tus respuestas</li>
+<li>Arrancás tu transformación con respaldo y seguimiento real</li>
+</ol>`,
     waMessage: 'Hola Nehemias, me interesa el Programa Personalizado. ¿Podemos hablar?',
     tag: 'PERSONALIZADO',
-    routine: null,
-    routineNote: 'Este plan no tiene una rutina fija — se diseña específicamente para vos según tus objetivos, equipamiento disponible y disponibilidad horaria.',
   },
 
   /* ── HIPERTROFIA HOMBRE ──────────────────────────────────── */
@@ -782,20 +843,24 @@ const PLANS = {
     price: '$27.500',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '2 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocado en masa muscular completa',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '2 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 2 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 2 días por semana con una estructura Full Body, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen en todos los grupos musculares</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x2 (2 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Full Body A', exercises: [] },
-      { day: 2, name: 'Full Body B', exercises: [] },
-    ],
   },
 
   'hipertrofia-hombre-x3': {
@@ -805,21 +870,24 @@ const PLANS = {
     price: '$30.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '3 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocado en masa muscular completa',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '3 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 3 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 3 días por semana con una estructura Upper/Lower/Full Body, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen en todos los grupos musculares</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x3 (3 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Upper (Tren Superior)', exercises: [] },
-      { day: 2, name: 'Lower (Tren Inferior)', exercises: [] },
-      { day: 3, name: 'Full Body', exercises: [] },
-    ],
   },
 
   'hipertrofia-hombre-x4': {
@@ -829,22 +897,24 @@ const PLANS = {
     price: '$35.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '4 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocado en masa muscular completa',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '4 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 4 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 4 días por semana con una estructura Push/Pull/Legs/Brazos, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen en todos los grupos musculares</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x4 (4 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Push (Empuje)', exercises: [] },
-      { day: 2, name: 'Pull (Tirón)', exercises: [] },
-      { day: 3, name: 'Legs (Piernas)', exercises: [] },
-      { day: 4, name: 'Brazos', exercises: [] },
-    ],
   },
 
   'hipertrofia-hombre-x5': {
@@ -854,23 +924,24 @@ const PLANS = {
     price: '$39.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '5 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocado en masa muscular completa',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '5 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 5 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 5 días por semana con una estructura Push/Pull/Legs/Push/Pull, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen en todos los grupos musculares</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x5 (5 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Push A (Empuje)', exercises: [] },
-      { day: 2, name: 'Pull A (Tirón)', exercises: [] },
-      { day: 3, name: 'Legs (Piernas)', exercises: [] },
-      { day: 4, name: 'Push B (Empuje)', exercises: [] },
-      { day: 5, name: 'Pull B (Tirón)', exercises: [] },
-    ],
   },
 
   'hipertrofia-hombre-x6': {
@@ -880,24 +951,24 @@ const PLANS = {
     price: '$45.000',
     priceOld: '$55.000',
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '6 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocado en masa muscular completa',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '6 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 6 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 6 días por semana con una estructura Push/Pull/Legs x2, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen en todos los grupos musculares</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x6 (6 días/semana). ¿Cómo lo adquiero?',
     tag: 'OFERTA',
-    routine: [
-      { day: 1, name: 'Push A (Empuje)', exercises: [] },
-      { day: 2, name: 'Pull A (Tirón)', exercises: [] },
-      { day: 3, name: 'Legs A (Piernas)', exercises: [] },
-      { day: 4, name: 'Push B (Empuje)', exercises: [] },
-      { day: 5, name: 'Pull B (Tirón)', exercises: [] },
-      { day: 6, name: 'Legs B (Piernas)', exercises: [] },
-    ],
   },
 
   /* ── HIPERTROFIA MUJER ───────────────────────────────────── */
@@ -908,20 +979,24 @@ const PLANS = {
     price: '$27.500',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '2 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocada en glúteos y piernas',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '2 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 2 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 2 días por semana con una estructura Piernas/Glúteos/Empuje/Core, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen enfocado en glúteos y piernas</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x2 (2 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Piernas + Empuje + Core', exercises: [] },
-      { day: 2, name: 'Glúteos + Espalda + Core', exercises: [] },
-    ],
   },
 
   'hipertrofia-mujer-x3': {
@@ -931,21 +1006,24 @@ const PLANS = {
     price: '$30.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '3 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocada en glúteos y piernas',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '3 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 3 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 3 días por semana con una estructura Glúteos/Cuád · Torso · Glúteos/Femorales, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen enfocado en glúteos y piernas</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x3 (3 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
-      { day: 2, name: 'Torso', exercises: [] },
-      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
-    ],
   },
 
   'hipertrofia-mujer-x4': {
@@ -955,22 +1033,24 @@ const PLANS = {
     price: '$35.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '4 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocada en glúteos y piernas',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '4 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 4 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 4 días por semana con una estructura Glúteos/Cuád · Torso · Glúteos/Femorales · Torso/Glúteos, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen enfocado en glúteos y piernas</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x4 (4 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
-      { day: 2, name: 'Torso', exercises: [] },
-      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
-      { day: 4, name: 'Torso + Glúteos', exercises: [] },
-    ],
   },
 
   'hipertrofia-mujer-x5': {
@@ -980,23 +1060,24 @@ const PLANS = {
     price: '$39.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '5 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocada en glúteos y piernas',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '5 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 5 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 5 días por semana con una estructura Glúteos/Cuád · Pull · Glúteos/Femorales · Push · Piernas completas, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen enfocado en glúteos y piernas</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x5 (5 días/semana). ¿Cómo lo adquiero?',
     tag: null,
-    routine: [
-      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
-      { day: 2, name: 'Pull (Tirón / Espalda + Bíceps)', exercises: [] },
-      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
-      { day: 4, name: 'Push (Empuje / Pecho + Hombros + Tríceps)', exercises: [] },
-      { day: 5, name: 'Piernas Completas', exercises: [] },
-    ],
   },
 
   'hipertrofia-mujer-x6': {
@@ -1006,24 +1087,24 @@ const PLANS = {
     price: '$45.000',
     priceOld: '$55.000',
     priceNote: '// Pago único · Acceso permanente',
-    duration: 'Permanente',
-    frequency: '6 días / semana',
-    includes: [
-      'Rutina PDF completa',
-      'Videos de técnica por ejercicio',
-      'Progresión estructurada semana a semana',
-      'Enfocada en glúteos y piernas',
-    ],
+    duration: 'ACCESO PERMANENTE',
+    frequency: '6 DÍAS POR SEMANA',
+    contentHtml: `<h2>PLAN HIPERTROFIA – 6 VECES POR SEMANA</h2>
+<p>Un programa pensado para quienes quieren desarrollar su masa muscular entrenando 6 días por semana con una estructura Glúteos/Cuád · Pull · Glúteos/Femorales · Push · Hombros/Core · Piernas completas, siguiendo una progresión que garantiza intensidad, variedad y progreso constante en cada sesión.</p>
+<div class="sec-head">// IDEAL PARA QUIENES BUSCAN</div>
+<ul>
+<li>Maximizar la hipertrofia aplicando técnicas de entrenamiento efectivas</li>
+<li>Aumentar fuerza y volumen enfocado en glúteos y piernas</li>
+<li>Alcanzar un mayor nivel de congestión y resistencia muscular</li>
+</ul>
+<div class="sec-head">// EL PROGRAMA INCLUYE</div>
+<ul>
+<li>Ejercicios básicos y accesorios distribuidos estratégicamente por día</li>
+<li>Rutina detallada con series, repeticiones y tiempos de descanso</li>
+<li>Progresión planificada para romper estancamientos y potenciar resultados</li>
+</ul>`,
     waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x6 (6 días/semana). ¿Cómo lo adquiero?',
     tag: 'OFERTA',
-    routine: [
-      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
-      { day: 2, name: 'Pull (Tirón / Espalda + Bíceps)', exercises: [] },
-      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
-      { day: 4, name: 'Push (Empuje / Pecho + Hombros + Tríceps)', exercises: [] },
-      { day: 5, name: 'Hombros + Core', exercises: [] },
-      { day: 6, name: 'Piernas Completas', exercises: [] },
-    ],
   },
 };
 
@@ -1065,50 +1146,10 @@ if (!plan) {
   document.getElementById('pd-duration').textContent = plan.duration;
   document.getElementById('pd-frequency').textContent = plan.frequency;
 
-  const inclEl = document.getElementById('pd-incl');
-  plan.includes.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = item;
-    inclEl.appendChild(li);
-  });
+  document.getElementById('pd-content').innerHTML = plan.contentHtml;
 
   const waUrl = 'https://wa.me/5492477618128?text=' + encodeURIComponent(plan.waMessage);
   document.getElementById('pd-wa').href = waUrl;
-
-  // Routine section
-  if (plan.routine && plan.routine.length > 0) {
-    document.getElementById('pd-routine').style.display = '';
-    const daysEl = document.getElementById('pd-days');
-    plan.routine.forEach(d => {
-      const hasExercises = d.exercises && d.exercises.length > 0;
-      const dayHtml = `
-        <div class="day-block">
-          <div class="day-head">
-            <div class="day-num">${String(d.day).padStart(2, '0')}</div>
-            <div class="day-title">${d.name}</div>
-            <div class="day-tag">DÍA ${d.day}</div>
-          </div>
-          ${hasExercises ? `
-          <table class="exercise-table">
-            <thead><tr><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso</th><th>Notas</th></tr></thead>
-            <tbody>
-              ${d.exercises.map(e => `
-              <tr>
-                <td class="ex-name">${e.name}</td>
-                <td class="ex-sets">${e.sets}</td>
-                <td class="ex-reps">${e.reps}</td>
-                <td class="ex-rest">${e.rest}</td>
-                <td class="ex-notes">${e.notes || ''}</td>
-              </tr>`).join('')}
-            </tbody>
-          </table>` : ''}
-        </div>`;
-      daysEl.insertAdjacentHTML('beforeend', dayHtml);
-    });
-  } else if (plan.routineNote) {
-    document.getElementById('pd-routine-note').style.display = '';
-    document.getElementById('pd-routine-note-text').textContent = plan.routineNote;
-  }
 }
 
 /* ============================================================
