@@ -130,15 +130,16 @@ section:first-of-type { border-top: none; }
   align-items: center;
   text-decoration: none;
 }
-.logo-img-icon {
-  height: 32px;
-  width: auto;
-  display: none;
-}
-.logo-img-full {
+.logo-img-bolt {
   height: 36px;
   width: auto;
   display: block;
+}
+.hero-logo-img {
+  width: min(900px, 90vw);
+  height: auto;
+  display: block;
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
 .nav-links {
@@ -1407,8 +1408,6 @@ section:first-of-type { border-top: none; }
   .proceso { grid-template-columns: 1fr; }
   .step + .step { border-left: none; border-top: 1px solid var(--line); }
   .hipert-grid { grid-template-columns: 1fr; }
-  .logo-img-full { display: none; }
-  .logo-img-icon { display: block; }
 }
 </style>
 </head>
@@ -1418,8 +1417,7 @@ section:first-of-type { border-top: none; }
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#inicio" class="logo">
-      <img src="logo-icon.png" alt="Voltrox Athletics" class="logo-img-icon">
-      <img src="logo-full.png" alt="Voltrox Athletics" class="logo-img-full">
+      <img src="logo-bolt.png" alt="Voltrox Athletics" class="logo-img-bolt">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio" class="active">01 Inicio</a></li>
@@ -1447,10 +1445,7 @@ section:first-of-type { border-top: none; }
       <span class="hero-loc"><strong>100% Online</strong> · Worldwide</span>
     </div>
 
-    <h1 class="display hero-title">
-      <span class="hero-title-line"><span>VOLTROX</span></span>
-      <span class="hero-title-line"><span>ATH<em>L</em>ETICS</span></span>
-    </h1>
+    <img src="logo-full-white.png" alt="Voltrox Athletics" class="hero-logo-img">
 
     <div class="hero-sub reveal">
       <span class="dot"></span>
