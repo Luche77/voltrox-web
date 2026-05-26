@@ -1040,8 +1040,15 @@ section:first-of-type { border-top: none; }
   border: none;
   border-right: 1px solid var(--line);
   margin-bottom: 0;
+  grid-template-columns: 1fr;
 }
 .premium-grid .plan-feat:last-child { border-right: none; }
+.premium-grid .plan-feat-img {
+  height: 340px;
+  min-height: unset;
+  border-right: none;
+  border-bottom: 1px solid var(--line);
+}
 .plan-feat-img {
   position: relative;
   min-height: 360px;
@@ -1061,6 +1068,12 @@ section:first-of-type { border-top: none; }
   font-size: 10px;
   letter-spacing: 0.2em;
   color: var(--ink-faint);
+}
+.plan-feat-img.has-photo::before { display: none; }
+.plan-feat-img.has-photo {
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 .plan-feat-img .img-title {
   font-family: var(--font-display);
@@ -1396,6 +1409,7 @@ section:first-of-type { border-top: none; }
   .premium-grid { grid-template-columns: 1fr; }
   .premium-grid .plan-feat { border-right: none; border-bottom: 1px solid var(--line); }
   .premium-grid .plan-feat:last-child { border-bottom: none; }
+  .premium-grid .plan-feat-img { height: 220px; }
   .plan-feat { grid-template-columns: 1fr; }
   .plan-feat-img { min-height: 220px; border-right: none; border-bottom: 1px solid var(--line); }
   .hipert-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1558,7 +1572,7 @@ section:first-of-type { border-top: none; }
 
       <div class="plan-feat">
         <div class="plan-feat-badge">PLAN PREMIUM</div>
-        <div class="plan-feat-img">
+        <div class="plan-feat-img has-photo" style="background-image: linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.25) 55%, rgba(10,10,10,0.1) 100%), url('foto-asesoria.png')">
           <span class="f-corner tl"></span><span class="f-corner tr"></span>
           <span class="f-corner bl"></span><span class="f-corner br"></span>
           <div class="feat-orange-bar"></div>
@@ -1577,7 +1591,7 @@ section:first-of-type { border-top: none; }
 
       <div class="plan-feat">
         <div class="plan-feat-badge">PERSONALIZADO</div>
-        <div class="plan-feat-img">
+        <div class="plan-feat-img has-photo" style="background-image: linear-gradient(to top, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.25) 55%, rgba(10,10,10,0.1) 100%), url('foto-personalizado.png')">
           <span class="f-corner tl"></span><span class="f-corner tr"></span>
           <span class="f-corner bl"></span><span class="f-corner br"></span>
           <div class="feat-orange-bar"></div>
