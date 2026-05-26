@@ -1830,18 +1830,21 @@ section:first-of-type { border-top: none; }
 
       <div class="contact-side">
         <h3>O contame<br/>tu objetivo.</h3>
-        <form class="form-grid" onsubmit="event.preventDefault(); this.querySelector('.btn-submit span:first-child').textContent='Enviado ✓'; this.querySelector('.btn-submit').style.background='var(--ink)';">
+        <form class="form-grid" id="contactForm">
+          <input type="hidden" name="access_key" value="6c0f160b-2007-461f-b6d8-23f26cd92f7a" />
+          <input type="hidden" name="subject" value="Nueva consulta — Voltrox Athletics" />
+          <input type="hidden" name="from_name" value="Voltrox Athletics Web" />
           <div class="field">
             <label for="nombre">Nombre</label>
-            <input id="nombre" type="text" placeholder="Tu nombre" required />
+            <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required />
           </div>
           <div class="field">
             <label for="email">Email</label>
-            <input id="email" type="email" placeholder="tu@email.com" required />
+            <input id="email" name="email" type="email" placeholder="tu@email.com" required />
           </div>
           <div class="field full">
             <label for="objetivo">Objetivo</label>
-            <select id="objetivo" required>
+            <select id="objetivo" name="objetivo" required>
               <option value="">Elegí una opción</option>
               <option>Hipertrofia</option>
               <option>Definición</option>
@@ -1851,9 +1854,9 @@ section:first-of-type { border-top: none; }
           </div>
           <div class="field full">
             <label for="mensaje">Mensaje</label>
-            <textarea id="mensaje" rows="4" placeholder="Contame en qué estás y qué te gustaría lograr…"></textarea>
+            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contame en qué estás y qué te gustaría lograr…"></textarea>
           </div>
-          <button type="submit" class="btn-submit">
+          <button type="submit" class="btn-submit" id="submitBtn">
             <span>Enviar</span><span>→</span>
           </button>
         </form>
@@ -1873,6 +1876,38 @@ section:first-of-type { border-top: none; }
 <!-- ====================== DATA + JS ====================== -->
 <script>
 /* ============================================================
+   CONTACT FORM — Web3Forms submission
+   ============================================================ */
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const label = btn.querySelector('span:first-child');
+  label.textContent = 'Enviando…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(this)
+    });
+    const json = await res.json();
+    if (json.success) {
+      label.textContent = 'Enviado ✓';
+      btn.style.background = 'var(--ink)';
+      this.reset();
+    } else {
+      label.textContent = 'Error. Intentá de nuevo.';
+      btn.style.background = '#b91c1c';
+      btn.disabled = false;
+    }
+  } catch {
+    label.textContent = 'Error. Intentá de nuevo.';
+    btn.style.background = '#b91c1c';
+    btn.disabled = false;
+  }
+});
+
+/* ============================================================
    PLAN CTA — prefill contact form with selected plan
    ============================================================ */
 document.querySelectorAll('[data-plan-cta]').forEach(cta => {
@@ -1883,7 +1918,6 @@ document.querySelectorAll('[data-plan-cta]').forEach(cta => {
     if (mensaje) {
       mensaje.value = `Hola Nehemias, me interesa el plan "${planName}". Quisiera más información.`;
     }
-    // Try to set a sensible default objetivo
     if (objetivoSel) {
       const map = {
         'Asesoría 1 a 1': 'Hipertrofia',
