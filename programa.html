@@ -121,12 +121,7 @@ main { flex: 1; }
   align-items: center;
   text-decoration: none;
 }
-.logo-img-icon {
-  height: 32px;
-  width: auto;
-  display: none;
-}
-.logo-img-full {
+.logo-img-bolt {
   height: 36px;
   width: auto;
   display: block;
@@ -492,8 +487,127 @@ main { flex: 1; }
   .pd-title { font-size: 52px; }
   .pd-cta-wrap { flex-direction: column; align-items: stretch; }
   .btn-big, .btn-ghost { justify-content: center; }
-  .logo-img-full { display: none; }
-  .logo-img-icon { display: block; }
+}
+
+/* ---------- Routine section ---------- */
+.pd-routine {
+  margin-top: 64px;
+  border-top: 1px solid var(--line);
+  padding-top: 48px;
+}
+.pd-routine-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.pd-routine-head p {
+  font-size: 14.5px;
+  color: var(--ink-dim);
+  line-height: 1.7;
+  max-width: 60ch;
+}
+.pd-routine-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-card);
+  font-size: 14.5px;
+  color: var(--ink-dim);
+  line-height: 1.7;
+}
+.pd-routine-note::before {
+  content: "//";
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--orange);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.day-block {
+  border: 1px solid var(--line);
+  margin-bottom: 24px;
+  background: var(--bg-card);
+}
+.day-head {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+.day-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--orange);
+  letter-spacing: -0.01em;
+}
+.day-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.day-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+.exercise-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.exercise-table thead th {
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.exercise-table tbody tr + tr { border-top: 1px solid var(--line); }
+.exercise-table tbody tr:hover { background: var(--bg-elev); }
+.exercise-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.exercise-table td.ex-name { font-weight: 500; }
+.exercise-table td.ex-sets,
+.exercise-table td.ex-reps {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--orange);
+  white-space: nowrap;
+}
+.exercise-table td.ex-rest {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.exercise-table td.ex-notes {
+  font-size: 12px;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+@media (max-width: 768px) {
+  .day-head { grid-template-columns: 48px 1fr; }
+  .day-tag { display: none; }
+  .exercise-table td, .exercise-table thead th { padding: 12px 14px; }
+  .exercise-table td.ex-notes { display: none; }
 }
 </style>
 </head>
@@ -503,8 +617,7 @@ main { flex: 1; }
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="index.html#inicio" class="logo">
-      <img src="logo-icon.png" alt="Voltrox Athletics" class="logo-img-icon">
-      <img src="logo-full.png" alt="Voltrox Athletics" class="logo-img-full">
+      <img src="logo-bolt.png" alt="Voltrox Athletics" class="logo-img-bolt">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html#inicio">01 Inicio</a></li>
@@ -578,6 +691,20 @@ main { flex: 1; }
 
       </div>
 
+      <!-- Routine section (hipertrofia plans) -->
+      <div class="pd-routine reveal" id="pd-routine" style="display:none">
+        <div class="pd-routine-head">
+          <span class="eyebrow">// Rutina completa</span>
+          <p>Ejercicios, series, repeticiones y descanso para cada día de entrenamiento.</p>
+        </div>
+        <div id="pd-days"></div>
+      </div>
+
+      <!-- Custom plan note (asesoria / personalizado) -->
+      <div class="pd-routine reveal" id="pd-routine-note" style="display:none">
+        <div class="pd-routine-note" id="pd-routine-note-text"></div>
+      </div>
+
       <!-- Not found (hidden by default) -->
       <div class="pd-notfound" id="pd-notfound" style="display:none">
         <h1 class="display">Plan no encontrado.</h1>
@@ -602,10 +729,12 @@ main { flex: 1; }
    PLAN DATA
    ============================================================ */
 const PLANS = {
+
+  /* ── PLANES PREMIUM ─────────────────────────────────────── */
   'asesoria': {
     name: 'Asesoría 1 a 1',
     nameHtml: 'Asesoría <em>1 a 1</em>',
-    badge: 'Plan Premium · Cupos limitados · Acompañamiento directo',
+    badge: '// CUPOS LIMITADOS · ACOMPAÑAMIENTO DIRECTO',
     price: '$450.000',
     priceOld: null,
     priceNote: '// 12 semanas de acompañamiento completo',
@@ -620,11 +749,36 @@ const PLANS = {
     ],
     waMessage: 'Hola Nehemias, me interesa la Asesoría 1 a 1 (12 semanas). ¿Podemos hablar?',
     tag: 'PLAN PREMIUM',
+    routine: null,
+    routineNote: 'Este plan no tiene una rutina fija — la rutina se diseña 100% a medida para vos y se ajusta semana a semana durante las 12 semanas de seguimiento directo.',
   },
-  'hipertrofia-x2': {
-    name: 'Hipertrofia x2',
-    nameHtml: 'Hipertrofia <em>x2</em>',
-    badge: '// 2 días por semana · Hipertrofia',
+
+  'personalizado': {
+    name: 'Programa Personalizado',
+    nameHtml: 'Programa <em>Personalizado</em>',
+    badge: '// RUTINA A MEDIDA · SIN SEGUIMIENTO SEMANAL',
+    price: '$ — — —', /* TODO: agregar precio */
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: '12 semanas',
+    frequency: 'A medida',
+    includes: [
+      'Rutina diseñada a medida según tus objetivos',
+      'Adaptada a tu equipamiento disponible',
+      'Adaptada a tu disponibilidad horaria',
+      'Acceso permanente a tu rutina',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el Programa Personalizado. ¿Podemos hablar?',
+    tag: 'PERSONALIZADO',
+    routine: null,
+    routineNote: 'Este plan no tiene una rutina fija — se diseña específicamente para vos según tus objetivos, equipamiento disponible y disponibilidad horaria.',
+  },
+
+  /* ── HIPERTROFIA HOMBRE ──────────────────────────────────── */
+  'hipertrofia-hombre-x2': {
+    name: 'Hipertrofia Hombre x2',
+    nameHtml: 'Hipertrofia Hombre <em>x2</em>',
+    badge: '// 2 DÍAS POR SEMANA · HIPERTROFIA · HOMBRE',
     price: '$27.500',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
@@ -634,15 +788,20 @@ const PLANS = {
       'Rutina PDF completa',
       'Videos de técnica por ejercicio',
       'Progresión estructurada semana a semana',
-      'Apta para hombre y mujer',
+      'Enfocado en masa muscular completa',
     ],
-    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x2 (2 días por semana). ¿Cómo lo adquiero?',
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x2 (2 días/semana). ¿Cómo lo adquiero?',
     tag: null,
+    routine: [
+      { day: 1, name: 'Full Body A', exercises: [] },
+      { day: 2, name: 'Full Body B', exercises: [] },
+    ],
   },
-  'hipertrofia-x3': {
-    name: 'Hipertrofia x3',
-    nameHtml: 'Hipertrofia <em>x3</em>',
-    badge: '// 3 días por semana · Hipertrofia',
+
+  'hipertrofia-hombre-x3': {
+    name: 'Hipertrofia Hombre x3',
+    nameHtml: 'Hipertrofia Hombre <em>x3</em>',
+    badge: '// 3 DÍAS POR SEMANA · HIPERTROFIA · HOMBRE',
     price: '$30.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
@@ -652,15 +811,21 @@ const PLANS = {
       'Rutina PDF completa',
       'Videos de técnica por ejercicio',
       'Progresión estructurada semana a semana',
-      'Apta para hombre y mujer',
+      'Enfocado en masa muscular completa',
     ],
-    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x3 (3 días por semana). ¿Cómo lo adquiero?',
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x3 (3 días/semana). ¿Cómo lo adquiero?',
     tag: null,
+    routine: [
+      { day: 1, name: 'Upper (Tren Superior)', exercises: [] },
+      { day: 2, name: 'Lower (Tren Inferior)', exercises: [] },
+      { day: 3, name: 'Full Body', exercises: [] },
+    ],
   },
-  'hipertrofia-x4': {
-    name: 'Hipertrofia x4',
-    nameHtml: 'Hipertrofia <em>x4</em>',
-    badge: '// 4 días por semana · Hipertrofia',
+
+  'hipertrofia-hombre-x4': {
+    name: 'Hipertrofia Hombre x4',
+    nameHtml: 'Hipertrofia Hombre <em>x4</em>',
+    badge: '// 4 DÍAS POR SEMANA · HIPERTROFIA · HOMBRE',
     price: '$35.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
@@ -670,15 +835,22 @@ const PLANS = {
       'Rutina PDF completa',
       'Videos de técnica por ejercicio',
       'Progresión estructurada semana a semana',
-      'Apta para hombre y mujer',
+      'Enfocado en masa muscular completa',
     ],
-    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x4 (4 días por semana). ¿Cómo lo adquiero?',
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x4 (4 días/semana). ¿Cómo lo adquiero?',
     tag: null,
+    routine: [
+      { day: 1, name: 'Push (Empuje)', exercises: [] },
+      { day: 2, name: 'Pull (Tirón)', exercises: [] },
+      { day: 3, name: 'Legs (Piernas)', exercises: [] },
+      { day: 4, name: 'Brazos', exercises: [] },
+    ],
   },
-  'hipertrofia-x5': {
-    name: 'Hipertrofia x5',
-    nameHtml: 'Hipertrofia <em>x5</em>',
-    badge: '// 5 días por semana · Hipertrofia',
+
+  'hipertrofia-hombre-x5': {
+    name: 'Hipertrofia Hombre x5',
+    nameHtml: 'Hipertrofia Hombre <em>x5</em>',
+    badge: '// 5 DÍAS POR SEMANA · HIPERTROFIA · HOMBRE',
     price: '$39.000',
     priceOld: null,
     priceNote: '// Pago único · Acceso permanente',
@@ -688,15 +860,23 @@ const PLANS = {
       'Rutina PDF completa',
       'Videos de técnica por ejercicio',
       'Progresión estructurada semana a semana',
-      'Apta para hombre y mujer',
+      'Enfocado en masa muscular completa',
     ],
-    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x5 (5 días por semana). ¿Cómo lo adquiero?',
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x5 (5 días/semana). ¿Cómo lo adquiero?',
     tag: null,
+    routine: [
+      { day: 1, name: 'Push A (Empuje)', exercises: [] },
+      { day: 2, name: 'Pull A (Tirón)', exercises: [] },
+      { day: 3, name: 'Legs (Piernas)', exercises: [] },
+      { day: 4, name: 'Push B (Empuje)', exercises: [] },
+      { day: 5, name: 'Pull B (Tirón)', exercises: [] },
+    ],
   },
-  'hipertrofia-x6': {
-    name: 'Hipertrofia x6',
-    nameHtml: 'Hipertrofia <em>x6</em>',
-    badge: '// 6 días por semana · Hipertrofia',
+
+  'hipertrofia-hombre-x6': {
+    name: 'Hipertrofia Hombre x6',
+    nameHtml: 'Hipertrofia Hombre <em>x6</em>',
+    badge: '// 6 DÍAS POR SEMANA · HIPERTROFIA · HOMBRE',
     price: '$45.000',
     priceOld: '$55.000',
     priceNote: '// Pago único · Acceso permanente',
@@ -706,10 +886,144 @@ const PLANS = {
       'Rutina PDF completa',
       'Videos de técnica por ejercicio',
       'Progresión estructurada semana a semana',
-      'Apta para hombre y mujer',
+      'Enfocado en masa muscular completa',
     ],
-    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x6 (6 días por semana). ¿Cómo lo adquiero?',
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Hombre x6 (6 días/semana). ¿Cómo lo adquiero?',
     tag: 'OFERTA',
+    routine: [
+      { day: 1, name: 'Push A (Empuje)', exercises: [] },
+      { day: 2, name: 'Pull A (Tirón)', exercises: [] },
+      { day: 3, name: 'Legs A (Piernas)', exercises: [] },
+      { day: 4, name: 'Push B (Empuje)', exercises: [] },
+      { day: 5, name: 'Pull B (Tirón)', exercises: [] },
+      { day: 6, name: 'Legs B (Piernas)', exercises: [] },
+    ],
+  },
+
+  /* ── HIPERTROFIA MUJER ───────────────────────────────────── */
+  'hipertrofia-mujer-x2': {
+    name: 'Hipertrofia Mujer x2',
+    nameHtml: 'Hipertrofia Mujer <em>x2</em>',
+    badge: '// 2 DÍAS POR SEMANA · HIPERTROFIA · MUJER',
+    price: '$27.500',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '2 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Enfocada en glúteos y piernas',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x2 (2 días/semana). ¿Cómo lo adquiero?',
+    tag: null,
+    routine: [
+      { day: 1, name: 'Piernas + Empuje + Core', exercises: [] },
+      { day: 2, name: 'Glúteos + Espalda + Core', exercises: [] },
+    ],
+  },
+
+  'hipertrofia-mujer-x3': {
+    name: 'Hipertrofia Mujer x3',
+    nameHtml: 'Hipertrofia Mujer <em>x3</em>',
+    badge: '// 3 DÍAS POR SEMANA · HIPERTROFIA · MUJER',
+    price: '$30.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '3 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Enfocada en glúteos y piernas',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x3 (3 días/semana). ¿Cómo lo adquiero?',
+    tag: null,
+    routine: [
+      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
+      { day: 2, name: 'Torso', exercises: [] },
+      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
+    ],
+  },
+
+  'hipertrofia-mujer-x4': {
+    name: 'Hipertrofia Mujer x4',
+    nameHtml: 'Hipertrofia Mujer <em>x4</em>',
+    badge: '// 4 DÍAS POR SEMANA · HIPERTROFIA · MUJER',
+    price: '$35.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '4 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Enfocada en glúteos y piernas',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x4 (4 días/semana). ¿Cómo lo adquiero?',
+    tag: null,
+    routine: [
+      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
+      { day: 2, name: 'Torso', exercises: [] },
+      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
+      { day: 4, name: 'Torso + Glúteos', exercises: [] },
+    ],
+  },
+
+  'hipertrofia-mujer-x5': {
+    name: 'Hipertrofia Mujer x5',
+    nameHtml: 'Hipertrofia Mujer <em>x5</em>',
+    badge: '// 5 DÍAS POR SEMANA · HIPERTROFIA · MUJER',
+    price: '$39.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '5 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Enfocada en glúteos y piernas',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x5 (5 días/semana). ¿Cómo lo adquiero?',
+    tag: null,
+    routine: [
+      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
+      { day: 2, name: 'Pull (Tirón / Espalda + Bíceps)', exercises: [] },
+      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
+      { day: 4, name: 'Push (Empuje / Pecho + Hombros + Tríceps)', exercises: [] },
+      { day: 5, name: 'Piernas Completas', exercises: [] },
+    ],
+  },
+
+  'hipertrofia-mujer-x6': {
+    name: 'Hipertrofia Mujer x6',
+    nameHtml: 'Hipertrofia Mujer <em>x6</em>',
+    badge: '// 6 DÍAS POR SEMANA · HIPERTROFIA · MUJER',
+    price: '$45.000',
+    priceOld: '$55.000',
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '6 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Enfocada en glúteos y piernas',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia Mujer x6 (6 días/semana). ¿Cómo lo adquiero?',
+    tag: 'OFERTA',
+    routine: [
+      { day: 1, name: 'Glúteos + Cuádriceps', exercises: [] },
+      { day: 2, name: 'Pull (Tirón / Espalda + Bíceps)', exercises: [] },
+      { day: 3, name: 'Glúteos + Femorales', exercises: [] },
+      { day: 4, name: 'Push (Empuje / Pecho + Hombros + Tríceps)', exercises: [] },
+      { day: 5, name: 'Hombros + Core', exercises: [] },
+      { day: 6, name: 'Piernas Completas', exercises: [] },
+    ],
   },
 };
 
@@ -760,6 +1074,41 @@ if (!plan) {
 
   const waUrl = 'https://wa.me/5492477618128?text=' + encodeURIComponent(plan.waMessage);
   document.getElementById('pd-wa').href = waUrl;
+
+  // Routine section
+  if (plan.routine && plan.routine.length > 0) {
+    document.getElementById('pd-routine').style.display = '';
+    const daysEl = document.getElementById('pd-days');
+    plan.routine.forEach(d => {
+      const hasExercises = d.exercises && d.exercises.length > 0;
+      const dayHtml = `
+        <div class="day-block">
+          <div class="day-head">
+            <div class="day-num">${String(d.day).padStart(2, '0')}</div>
+            <div class="day-title">${d.name}</div>
+            <div class="day-tag">DÍA ${d.day}</div>
+          </div>
+          ${hasExercises ? `
+          <table class="exercise-table">
+            <thead><tr><th>Ejercicio</th><th>Series</th><th>Reps</th><th>Descanso</th><th>Notas</th></tr></thead>
+            <tbody>
+              ${d.exercises.map(e => `
+              <tr>
+                <td class="ex-name">${e.name}</td>
+                <td class="ex-sets">${e.sets}</td>
+                <td class="ex-reps">${e.reps}</td>
+                <td class="ex-rest">${e.rest}</td>
+                <td class="ex-notes">${e.notes || ''}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>` : ''}
+        </div>`;
+      daysEl.insertAdjacentHTML('beforeend', dayHtml);
+    });
+  } else if (plan.routineNote) {
+    document.getElementById('pd-routine-note').style.display = '';
+    document.getElementById('pd-routine-note-text').textContent = plan.routineNote;
+  }
 }
 
 /* ============================================================

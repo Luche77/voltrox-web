@@ -1017,8 +1017,7 @@ section:first-of-type { border-top: none; }
   position: relative;
   overflow: hidden;
 }
-.plan-feat::after {
-  content: "PLAN PREMIUM";
+.plan-feat-badge {
   position: absolute;
   top: 16px; right: 0;
   background: var(--orange);
@@ -1028,7 +1027,21 @@ section:first-of-type { border-top: none; }
   font-weight: 700;
   letter-spacing: 0.25em;
   padding: 5px 14px;
+  z-index: 2;
 }
+.premium-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-bottom: 64px;
+  border: 1px solid var(--line);
+}
+.premium-grid .plan-feat {
+  border: none;
+  border-right: 1px solid var(--line);
+  margin-bottom: 0;
+}
+.premium-grid .plan-feat:last-child { border-right: none; }
 .plan-feat-img {
   position: relative;
   min-height: 360px;
@@ -1380,6 +1393,9 @@ section:first-of-type { border-top: none; }
     border-top: 1px solid var(--line);
     padding: 20px 24px;
   }
+  .premium-grid { grid-template-columns: 1fr; }
+  .premium-grid .plan-feat { border-right: none; border-bottom: 1px solid var(--line); }
+  .premium-grid .plan-feat:last-child { border-bottom: none; }
   .plan-feat { grid-template-columns: 1fr; }
   .plan-feat-img { min-height: 220px; border-right: none; border-bottom: 1px solid var(--line); }
   .hipert-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1532,123 +1548,195 @@ section:first-of-type { border-top: none; }
       <div class="section-head-meta">
         <span class="eyebrow"><strong>03</strong> // Training Programs</span>
         <p style="color:var(--ink-dim); font-size:14.5px; line-height:1.7; max-width:48ch">
-          Cinco modalidades distintas. Elegís el plan que mejor encaja con tu objetivo, y yo armo la rutina a medida para vos.
+          Planes de coaching 1 a 1 y rutinas de hipertrofia para hombre y mujer. Diseñados para resultados reales.
         </p>
       </div>
     </header>
 
-    <!-- Asesoría 1 a 1 -->
-    <div class="plan-feat reveal">
-      <div class="plan-feat-img">
-        <span class="f-corner tl"></span><span class="f-corner tr"></span>
-        <span class="f-corner bl"></span><span class="f-corner br"></span>
-        <div class="feat-orange-bar"></div>
-        <div class="img-title">ASESORÍA<br/>1 A 1</div>
-        <div class="img-sub">// 12 semanas · plan premium</div>
+    <!-- BLOQUE 1: PLANES PREMIUM -->
+    <div class="premium-grid reveal-stagger">
+
+      <div class="plan-feat">
+        <div class="plan-feat-badge">PLAN PREMIUM</div>
+        <div class="plan-feat-img">
+          <span class="f-corner tl"></span><span class="f-corner tr"></span>
+          <span class="f-corner bl"></span><span class="f-corner br"></span>
+          <div class="feat-orange-bar"></div>
+          <div class="img-title">ASESORÍA<br/>1 A 1</div>
+          <div class="img-sub">// 12 SEMANAS · PLAN PREMIUM</div>
+        </div>
+        <div class="plan-feat-body">
+          <span class="plan-badge">// CUPOS LIMITADOS · ACOMPAÑAMIENTO DIRECTO</span>
+          <div class="plan-feat-title">Asesoría <em>1 a 1</em></div>
+          <p class="plan-short-desc">El plan más completo: rutina personalizada, nutrición y seguimiento semanal directo con el coach.</p>
+          <a href="programa.html?plan=asesoria" class="btn-big" style="align-self:flex-start">
+            <span>VER PROGRAMA</span><span class="arrow">→</span>
+          </a>
+        </div>
       </div>
-      <div class="plan-feat-body">
-        <span class="plan-badge">// Cupos limitados · acompañamiento directo</span>
-        <div class="plan-feat-title">Asesoría <em>1 a 1</em></div>
-        <p class="plan-short-desc">El plan más completo: rutina personalizada, nutrición y seguimiento semanal directo con el coach.</p>
-        <a href="programa.html?plan=asesoria" class="btn-big" style="align-self:flex-start">
-          <span>Ver programa</span><span class="arrow">→</span>
-        </a>
+
+      <div class="plan-feat">
+        <div class="plan-feat-badge">PERSONALIZADO</div>
+        <div class="plan-feat-img">
+          <span class="f-corner tl"></span><span class="f-corner tr"></span>
+          <span class="f-corner bl"></span><span class="f-corner br"></span>
+          <div class="feat-orange-bar"></div>
+          <div class="img-title">PROGRAMA<br/>PERSONAL</div>
+          <div class="img-sub">// 12 SEMANAS · PLAN PERSONALIZADO</div>
+        </div>
+        <div class="plan-feat-body">
+          <span class="plan-badge">// RUTINA A MEDIDA · SIN SEGUIMIENTO SEMANAL</span>
+          <div class="plan-feat-title">Programa <em>Personalizado</em></div>
+          <p class="plan-short-desc">Recibís una rutina diseñada específicamente para vos, según tus objetivos, equipamiento y disponibilidad.</p>
+          <a href="programa.html?plan=personalizado" class="btn-big" style="align-self:flex-start">
+            <span>VER PROGRAMA</span><span class="arrow">→</span>
+          </a>
+        </div>
       </div>
+
     </div>
 
-    <!-- Hipertrofia -->
+    <!-- BLOQUE 2: HIPERTROFIA HOMBRE -->
     <div class="hipert-header reveal">
-      <span class="label">// Hipertrofia — Hombre &amp; Mujer</span>
+      <span class="label">// HIPERTROFIA — HOMBRE</span>
     </div>
     <div class="hipert-grid reveal-stagger">
 
       <article class="hipert-card">
         <div class="hipert-card-img">
           <div class="hi-num">x2</div>
-          <div class="hi-label">
-            <div class="hi-freq">2 DÍAS</div>
-            <div class="hi-sub">Por semana</div>
-          </div>
+          <div class="hi-label"><div class="hi-freq">2 DÍAS</div><div class="hi-sub">Por semana</div></div>
           <div class="hi-bar"></div>
         </div>
         <div class="hipert-card-body">
-          <span class="hi-tag">// Hipertrofia</span>
-          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
-          <a href="programa.html?plan=hipertrofia-x2" class="hi-cta">
-            <span>Ver programa</span><span class="arr">→</span>
-          </a>
+          <span class="hi-tag">// HIPERTROFIA · HOMBRE</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocado en masa muscular completa.</p>
+          <a href="programa.html?plan=hipertrofia-hombre-x2" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
         </div>
       </article>
 
       <article class="hipert-card">
         <div class="hipert-card-img">
           <div class="hi-num">x3</div>
-          <div class="hi-label">
-            <div class="hi-freq">3 DÍAS</div>
-            <div class="hi-sub">Por semana</div>
-          </div>
+          <div class="hi-label"><div class="hi-freq">3 DÍAS</div><div class="hi-sub">Por semana</div></div>
           <div class="hi-bar"></div>
         </div>
         <div class="hipert-card-body">
-          <span class="hi-tag">// Hipertrofia</span>
-          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
-          <a href="programa.html?plan=hipertrofia-x3" class="hi-cta">
-            <span>Ver programa</span><span class="arr">→</span>
-          </a>
+          <span class="hi-tag">// HIPERTROFIA · HOMBRE</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocado en masa muscular completa.</p>
+          <a href="programa.html?plan=hipertrofia-hombre-x3" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
         </div>
       </article>
 
       <article class="hipert-card">
         <div class="hipert-card-img">
           <div class="hi-num">x4</div>
-          <div class="hi-label">
-            <div class="hi-freq">4 DÍAS</div>
-            <div class="hi-sub">Por semana</div>
-          </div>
+          <div class="hi-label"><div class="hi-freq">4 DÍAS</div><div class="hi-sub">Por semana</div></div>
           <div class="hi-bar"></div>
         </div>
         <div class="hipert-card-body">
-          <span class="hi-tag">// Hipertrofia</span>
-          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
-          <a href="programa.html?plan=hipertrofia-x4" class="hi-cta">
-            <span>Ver programa</span><span class="arr">→</span>
-          </a>
+          <span class="hi-tag">// HIPERTROFIA · HOMBRE</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocado en masa muscular completa.</p>
+          <a href="programa.html?plan=hipertrofia-hombre-x4" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
         </div>
       </article>
 
       <article class="hipert-card">
         <div class="hipert-card-img">
           <div class="hi-num">x5</div>
-          <div class="hi-label">
-            <div class="hi-freq">5 DÍAS</div>
-            <div class="hi-sub">Por semana</div>
-          </div>
+          <div class="hi-label"><div class="hi-freq">5 DÍAS</div><div class="hi-sub">Por semana</div></div>
           <div class="hi-bar"></div>
         </div>
         <div class="hipert-card-body">
-          <span class="hi-tag">// Hipertrofia</span>
-          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
-          <a href="programa.html?plan=hipertrofia-x5" class="hi-cta">
-            <span>Ver programa</span><span class="arr">→</span>
-          </a>
+          <span class="hi-tag">// HIPERTROFIA · HOMBRE</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocado en masa muscular completa.</p>
+          <a href="programa.html?plan=hipertrofia-hombre-x5" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
         </div>
       </article>
 
       <article class="hipert-card">
         <div class="hipert-card-img">
           <div class="hi-num">x6</div>
-          <div class="hi-label">
-            <div class="hi-freq">6 DÍAS</div>
-            <div class="hi-sub">Por semana</div>
-          </div>
+          <div class="hi-label"><div class="hi-freq">6 DÍAS</div><div class="hi-sub">Por semana</div></div>
           <div class="hi-bar"></div>
         </div>
         <div class="hipert-card-body">
-          <span class="hi-tag">// Hipertrofia</span>
-          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
-          <a href="programa.html?plan=hipertrofia-x6" class="hi-cta">
-            <span>Ver programa</span><span class="arr">→</span>
-          </a>
+          <span class="hi-tag">// HIPERTROFIA · HOMBRE</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocado en masa muscular completa.</p>
+          <a href="programa.html?plan=hipertrofia-hombre-x6" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- BLOQUE 3: HIPERTROFIA MUJER -->
+    <div class="hipert-header reveal">
+      <span class="label">// HIPERTROFIA — MUJER</span>
+    </div>
+    <div class="hipert-grid reveal-stagger">
+
+      <article class="hipert-card">
+        <div class="hipert-card-img">
+          <div class="hi-num">x2</div>
+          <div class="hi-label"><div class="hi-freq">2 DÍAS</div><div class="hi-sub">Por semana</div></div>
+          <div class="hi-bar"></div>
+        </div>
+        <div class="hipert-card-body">
+          <span class="hi-tag">// HIPERTROFIA · MUJER</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocada en glúteos y piernas.</p>
+          <a href="programa.html?plan=hipertrofia-mujer-x2" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
+        </div>
+      </article>
+
+      <article class="hipert-card">
+        <div class="hipert-card-img">
+          <div class="hi-num">x3</div>
+          <div class="hi-label"><div class="hi-freq">3 DÍAS</div><div class="hi-sub">Por semana</div></div>
+          <div class="hi-bar"></div>
+        </div>
+        <div class="hipert-card-body">
+          <span class="hi-tag">// HIPERTROFIA · MUJER</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocada en glúteos y piernas.</p>
+          <a href="programa.html?plan=hipertrofia-mujer-x3" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
+        </div>
+      </article>
+
+      <article class="hipert-card">
+        <div class="hipert-card-img">
+          <div class="hi-num">x4</div>
+          <div class="hi-label"><div class="hi-freq">4 DÍAS</div><div class="hi-sub">Por semana</div></div>
+          <div class="hi-bar"></div>
+        </div>
+        <div class="hipert-card-body">
+          <span class="hi-tag">// HIPERTROFIA · MUJER</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocada en glúteos y piernas.</p>
+          <a href="programa.html?plan=hipertrofia-mujer-x4" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
+        </div>
+      </article>
+
+      <article class="hipert-card">
+        <div class="hipert-card-img">
+          <div class="hi-num">x5</div>
+          <div class="hi-label"><div class="hi-freq">5 DÍAS</div><div class="hi-sub">Por semana</div></div>
+          <div class="hi-bar"></div>
+        </div>
+        <div class="hipert-card-body">
+          <span class="hi-tag">// HIPERTROFIA · MUJER</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocada en glúteos y piernas.</p>
+          <a href="programa.html?plan=hipertrofia-mujer-x5" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
+        </div>
+      </article>
+
+      <article class="hipert-card">
+        <div class="hipert-card-img">
+          <div class="hi-num">x6</div>
+          <div class="hi-label"><div class="hi-freq">6 DÍAS</div><div class="hi-sub">Por semana</div></div>
+          <div class="hi-bar"></div>
+        </div>
+        <div class="hipert-card-body">
+          <span class="hi-tag">// HIPERTROFIA · MUJER</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Enfocada en glúteos y piernas.</p>
+          <a href="programa.html?plan=hipertrofia-mujer-x6" class="hi-cta"><span>VER PROGRAMA</span><span class="arr">→</span></a>
         </div>
       </article>
 
