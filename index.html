@@ -128,33 +128,17 @@ section:first-of-type { border-top: none; }
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink);
   text-decoration: none;
 }
-.logo-mark {
-  width: 26px; height: 26px;
-  display: grid; place-items: center;
-  border: 1.5px solid var(--orange);
-  color: var(--orange);
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 16px;
-  transform: rotate(45deg);
+.logo-img-icon {
+  height: 32px;
+  width: auto;
+  display: none;
 }
-.logo-mark > span { transform: rotate(-45deg); }
-.logo small {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--ink-dim);
-  font-weight: 400;
-  text-transform: uppercase;
+.logo-img-full {
+  height: 36px;
+  width: auto;
+  display: block;
 }
 
 .nav-links {
@@ -1423,6 +1407,8 @@ section:first-of-type { border-top: none; }
   .proceso { grid-template-columns: 1fr; }
   .step + .step { border-left: none; border-top: 1px solid var(--line); }
   .hipert-grid { grid-template-columns: 1fr; }
+  .logo-img-full { display: none; }
+  .logo-img-icon { display: block; }
 }
 </style>
 </head>
@@ -1432,8 +1418,8 @@ section:first-of-type { border-top: none; }
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a href="#inicio" class="logo">
-      <span class="logo-mark"><span>V</span></span>
-      <span>VOLTROX <small>// athletics</small></span>
+      <img src="logo-icon.png" alt="Voltrox Athletics" class="logo-img-icon">
+      <img src="logo-full.png" alt="Voltrox Athletics" class="logo-img-full">
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio" class="active">01 Inicio</a></li>
