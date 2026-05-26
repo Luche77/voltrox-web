@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="page-title">Programa — VOLTROX ATHLETICS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   VOLTROX ATHLETICS — programa detail page
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #0A0A0A;
+  --bg-card: #141414;
+  --bg-elev: #1a1a1a;
+  --line: #262626;
+  --line-strong: #383838;
+  --ink: #F0EDE8;
+  --ink-dim: #8a8580;
+  --ink-faint: #565350;
+  --orange: #FF5500;
+  --orange-soft: rgba(255, 85, 0, 0.12);
+  --orange-glow: rgba(255, 85, 0, 0.35);
+
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --maxw: 1280px;
+  --pad: clamp(20px, 4vw, 64px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+::selection { background: var(--orange); color: var(--bg); }
+
+/* ---------- Typography ---------- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--orange);
+}
+
+/* ---------- Layout ---------- */
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+main { flex: 1; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 18px var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+.logo-mark {
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--orange);
+  color: var(--orange);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 16px;
+  transform: rotate(45deg);
+}
+.logo-mark > span { transform: rotate(-45deg); }
+.logo small {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-dim);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 6px;
+}
+.nav-links a {
+  display: inline-block;
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--orange);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.nav-cta:hover { background: #ff6a1f; transform: translateY(-1px); }
+.hamburger {
+  display: none;
+  width: 40px; height: 40px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  cursor: pointer;
+  position: relative;
+}
+.hamburger span {
+  position: absolute;
+  left: 10px; right: 10px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.25s, opacity 0.25s, top 0.25s;
+}
+.hamburger span:nth-child(1) { top: 13px; }
+.hamburger span:nth-child(2) { top: 19px; }
+.hamburger span:nth-child(3) { top: 25px; }
+.hamburger.open span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { top: 19px; transform: rotate(-45deg); }
+
+/* ---------- Buttons ---------- */
+.btn-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 32px;
+  background: var(--orange);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+.btn-big:hover { background: var(--ink); color: var(--bg); transform: translateY(-2px); }
+.btn-big .arrow { display: inline-block; transition: transform 0.2s; }
+.btn-big:hover .arrow { transform: translateX(6px); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+
+/* ---------- Plan Detail ---------- */
+.pd-section {
+  padding: clamp(56px, 8vh, 100px) 0 clamp(80px, 10vh, 120px);
+  border-top: none;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-decoration: none;
+  margin-bottom: 48px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--orange); }
+
+.pd-header {
+  margin-bottom: 48px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 40px;
+  position: relative;
+}
+.pd-header-eyebrow {
+  margin-bottom: 16px;
+}
+.pd-title {
+  font-size: clamp(52px, 9vw, 120px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+.pd-title em { color: var(--orange); font-style: normal; }
+.pd-tag {
+  position: absolute;
+  top: 0; right: 0;
+  background: var(--orange);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  padding: 5px 14px;
+  text-transform: uppercase;
+}
+
+.pd-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+
+.pd-left {
+  padding: clamp(28px, 4vw, 48px);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.pd-price-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+.pd-price {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(44px, 6vw, 72px);
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.pd-price-old {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--ink-faint);
+  text-decoration: line-through;
+  margin-top: 6px;
+  display: none;
+}
+.pd-price-old.visible { display: block; }
+.pd-discount {
+  display: inline-block;
+  background: var(--orange);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 4px 9px;
+  margin-top: 8px;
+  display: none;
+}
+.pd-discount.visible { display: inline-block; }
+.pd-price-note {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.pd-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.pd-spec {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pd-spec + .pd-spec { border-top: 1px solid var(--line); }
+.pd-spec-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.pd-spec-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pd-right {
+  padding: clamp(28px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.pd-incl-label {
+  margin-bottom: 20px;
+}
+.pd-incl {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--line);
+}
+.pd-incl li {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  border-bottom: 1px solid var(--line);
+  transition: background 0.15s, color 0.15s;
+}
+.pd-incl li:last-child { border-bottom: none; }
+.pd-incl li:hover { background: var(--bg-elev); color: var(--ink); }
+.pd-incl li::before {
+  content: "";
+  width: 6px; height: 6px;
+  background: var(--orange);
+  flex-shrink: 0;
+}
+
+.pd-cta-wrap {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Not found ---------- */
+.pd-notfound {
+  text-align: center;
+  padding: clamp(80px, 15vh, 160px) 0;
+}
+.pd-notfound h1 {
+  font-size: clamp(40px, 6vw, 72px);
+  margin-bottom: 16px;
+}
+.pd-notfound p {
+  color: var(--ink-dim);
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 0 32px;
+  margin-top: auto;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.footer-inner strong { color: var(--orange); }
+
+/* ---------- Reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hamburger { display: block; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 16px var(--pad);
+    gap: 0;
+  }
+  .nav-links.open a {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .nav-links.open a:last-child { border-bottom: none; }
+
+  .pd-body { grid-template-columns: 1fr; }
+  .pd-left { border-right: none; border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 560px) {
+  .pd-title { font-size: 52px; }
+  .pd-cta-wrap { flex-direction: column; align-items: stretch; }
+  .btn-big, .btn-ghost { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html#inicio" class="logo">
+      <span class="logo-mark"><span>V</span></span>
+      <span>VOLTROX <small>// athletics</small></span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#inicio">01 Inicio</a></li>
+      <li><a href="index.html#sobre-mi">02 Sobre Mí</a></li>
+      <li><a href="index.html#programas">03 Programas</a></li>
+      <li><a href="index.html#nutricion">04 Nutrición</a></li>
+      <li><a href="index.html#contacto">05 Contacto</a></li>
+    </ul>
+    <a href="index.html#contacto" class="nav-cta">Empezá hoy →</a>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <section class="pd-section">
+    <div class="wrap">
+
+      <a href="index.html#programas" class="back-link">← Volver a programas</a>
+
+      <!-- Header -->
+      <div class="pd-header reveal" id="pd-header">
+        <div class="pd-header-eyebrow">
+          <span class="eyebrow" id="pd-badge"></span>
+        </div>
+        <h1 class="display pd-title" id="pd-title"></h1>
+        <span class="pd-tag" id="pd-tag" style="display:none"></span>
+      </div>
+
+      <!-- Body grid -->
+      <div class="pd-body reveal" id="pd-body">
+
+        <!-- Left: price + specs -->
+        <div class="pd-left">
+          <div>
+            <span class="pd-price-label">Precio</span>
+            <div class="pd-price" id="pd-price"></div>
+            <div class="pd-price-old" id="pd-price-old"></div>
+            <span class="pd-discount" id="pd-discount"></span>
+            <span class="pd-price-note" id="pd-price-note"></span>
+          </div>
+          <div class="pd-specs">
+            <div class="pd-spec">
+              <span class="pd-spec-label">Duración</span>
+              <span class="pd-spec-val" id="pd-duration"></span>
+            </div>
+            <div class="pd-spec">
+              <span class="pd-spec-label">Frecuencia</span>
+              <span class="pd-spec-val" id="pd-frequency"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: includes + CTA -->
+        <div class="pd-right">
+          <div>
+            <div class="pd-incl-label">
+              <span class="eyebrow">// Qué incluye</span>
+            </div>
+            <ul class="pd-incl" id="pd-incl"></ul>
+          </div>
+          <div class="pd-cta-wrap">
+            <a id="pd-wa" href="#" target="_blank" rel="noopener" class="btn-big">
+              <span>Solicitar por WhatsApp</span><span class="arrow">→</span>
+            </a>
+            <a href="index.html#programas" class="btn-ghost">← Volver</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Not found (hidden by default) -->
+      <div class="pd-notfound" id="pd-notfound" style="display:none">
+        <h1 class="display">Plan no encontrado.</h1>
+        <p>El programa que buscás no existe o el enlace es incorrecto.</p>
+        <a href="index.html#programas" class="btn-ghost">← Ver todos los programas</a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>© 2026 <strong>VOLTROX ATHLETICS</strong> // by Nehemias Bou Sleiman</span>
+    <span>Built for athletes. Online. Worldwide.</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   PLAN DATA
+   ============================================================ */
+const PLANS = {
+  'asesoria': {
+    name: 'Asesoría 1 a 1',
+    nameHtml: 'Asesoría <em>1 a 1</em>',
+    badge: 'Plan Premium · Cupos limitados · Acompañamiento directo',
+    price: '$450.000',
+    priceOld: null,
+    priceNote: '// 12 semanas de acompañamiento completo',
+    duration: '12 semanas',
+    frequency: 'A medida',
+    includes: [
+      'Rutina diseñada 100% a medida',
+      'Llamadas de seguimiento semanales',
+      'Plan nutricional incluido',
+      'Chat directo con el coach',
+      'Ajustes continuos según tu progreso',
+    ],
+    waMessage: 'Hola Nehemias, me interesa la Asesoría 1 a 1 (12 semanas). ¿Podemos hablar?',
+    tag: 'PLAN PREMIUM',
+  },
+  'hipertrofia-x2': {
+    name: 'Hipertrofia x2',
+    nameHtml: 'Hipertrofia <em>x2</em>',
+    badge: '// 2 días por semana · Hipertrofia',
+    price: '$27.500',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '2 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Apta para hombre y mujer',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x2 (2 días por semana). ¿Cómo lo adquiero?',
+    tag: null,
+  },
+  'hipertrofia-x3': {
+    name: 'Hipertrofia x3',
+    nameHtml: 'Hipertrofia <em>x3</em>',
+    badge: '// 3 días por semana · Hipertrofia',
+    price: '$30.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '3 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Apta para hombre y mujer',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x3 (3 días por semana). ¿Cómo lo adquiero?',
+    tag: null,
+  },
+  'hipertrofia-x4': {
+    name: 'Hipertrofia x4',
+    nameHtml: 'Hipertrofia <em>x4</em>',
+    badge: '// 4 días por semana · Hipertrofia',
+    price: '$35.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '4 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Apta para hombre y mujer',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x4 (4 días por semana). ¿Cómo lo adquiero?',
+    tag: null,
+  },
+  'hipertrofia-x5': {
+    name: 'Hipertrofia x5',
+    nameHtml: 'Hipertrofia <em>x5</em>',
+    badge: '// 5 días por semana · Hipertrofia',
+    price: '$39.000',
+    priceOld: null,
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '5 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Apta para hombre y mujer',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x5 (5 días por semana). ¿Cómo lo adquiero?',
+    tag: null,
+  },
+  'hipertrofia-x6': {
+    name: 'Hipertrofia x6',
+    nameHtml: 'Hipertrofia <em>x6</em>',
+    badge: '// 6 días por semana · Hipertrofia',
+    price: '$45.000',
+    priceOld: '$55.000',
+    priceNote: '// Pago único · Acceso permanente',
+    duration: 'Permanente',
+    frequency: '6 días / semana',
+    includes: [
+      'Rutina PDF completa',
+      'Videos de técnica por ejercicio',
+      'Progresión estructurada semana a semana',
+      'Apta para hombre y mujer',
+    ],
+    waMessage: 'Hola Nehemias, me interesa el plan Hipertrofia x6 (6 días por semana). ¿Cómo lo adquiero?',
+    tag: 'OFERTA',
+  },
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const params = new URLSearchParams(window.location.search);
+const planKey = params.get('plan');
+const plan = PLANS[planKey];
+
+if (!plan) {
+  document.getElementById('pd-header').style.display = 'none';
+  document.getElementById('pd-body').style.display = 'none';
+  document.getElementById('pd-notfound').style.display = 'block';
+} else {
+  document.title = plan.name + ' — VOLTROX ATHLETICS';
+
+  document.getElementById('pd-badge').textContent = plan.badge;
+  document.getElementById('pd-title').innerHTML = plan.nameHtml;
+
+  if (plan.tag) {
+    const tagEl = document.getElementById('pd-tag');
+    tagEl.textContent = plan.tag;
+    tagEl.style.display = '';
+  }
+
+  document.getElementById('pd-price').textContent = plan.price;
+  document.getElementById('pd-price-note').textContent = plan.priceNote;
+
+  if (plan.priceOld) {
+    const oldEl = document.getElementById('pd-price-old');
+    oldEl.textContent = plan.priceOld;
+    oldEl.classList.add('visible');
+    const discEl = document.getElementById('pd-discount');
+    discEl.textContent = '−18% OFF';
+    discEl.classList.add('visible');
+  }
+
+  document.getElementById('pd-duration').textContent = plan.duration;
+  document.getElementById('pd-frequency').textContent = plan.frequency;
+
+  const inclEl = document.getElementById('pd-incl');
+  plan.includes.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    inclEl.appendChild(li);
+  });
+
+  const waUrl = 'https://wa.me/5492477618128?text=' + encodeURIComponent(plan.waMessage);
+  document.getElementById('pd-wa').href = waUrl;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
+});
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+
+</body>
+</html>

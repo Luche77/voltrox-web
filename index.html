@@ -1331,6 +1331,19 @@ section:first-of-type { border-top: none; }
 .hi-cta:hover { background: var(--orange); color: var(--bg); border-color: var(--orange); }
 .hi-cta:hover .arr { transform: translateX(4px); }
 
+/* ---------- Plan card short descriptions ---------- */
+.plan-short-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink-dim);
+}
+.hi-desc {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+  flex: 1;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 980px) {
   .nav-links { display: none; }
@@ -1555,18 +1568,9 @@ section:first-of-type { border-top: none; }
       <div class="plan-feat-body">
         <span class="plan-badge">// Cupos limitados · acompañamiento directo</span>
         <div class="plan-feat-title">Asesoría <em>1 a 1</em></div>
-        <div class="plan-price-block">
-          <div class="plan-price-main">$450.000</div>
-          <span class="plan-price-note">// 12 semanas de acompañamiento completo</span>
-        </div>
-        <ul class="plan-incl">
-          <li>Rutina diseñada a medida</li>
-          <li>Llamadas de seguimiento semanales</li>
-          <li>Plan nutricional incluido</li>
-          <li>Chat directo con el coach</li>
-        </ul>
-        <a href="#contacto" class="btn-big" style="align-self:flex-start" data-plan-cta="Asesoría 1 a 1">
-          <span>Solicitar plan</span><span class="arrow">→</span>
+        <p class="plan-short-desc">El plan más completo: rutina personalizada, nutrición y seguimiento semanal directo con el coach.</p>
+        <a href="programa.html?plan=asesoria" class="btn-big" style="align-self:flex-start">
+          <span>Ver programa</span><span class="arrow">→</span>
         </a>
       </div>
     </div>
@@ -1588,14 +1592,9 @@ section:first-of-type { border-top: none; }
         </div>
         <div class="hipert-card-body">
           <span class="hi-tag">// Hipertrofia</span>
-          <div class="hi-price">$27.500</div>
-          <ul class="hi-incl">
-            <li>Rutina PDF completa</li>
-            <li>Videos de técnica</li>
-            <li>Progresión estructurada</li>
-          </ul>
-          <a href="#contacto" class="hi-cta" data-plan-cta="Hipertrofia x2">
-            <span>Lo quiero</span><span class="arr">→</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
+          <a href="programa.html?plan=hipertrofia-x2" class="hi-cta">
+            <span>Ver programa</span><span class="arr">→</span>
           </a>
         </div>
       </article>
@@ -1611,14 +1610,9 @@ section:first-of-type { border-top: none; }
         </div>
         <div class="hipert-card-body">
           <span class="hi-tag">// Hipertrofia</span>
-          <div class="hi-price">$30.000</div>
-          <ul class="hi-incl">
-            <li>Rutina PDF completa</li>
-            <li>Videos de técnica</li>
-            <li>Progresión estructurada</li>
-          </ul>
-          <a href="#contacto" class="hi-cta" data-plan-cta="Hipertrofia x3">
-            <span>Lo quiero</span><span class="arr">→</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
+          <a href="programa.html?plan=hipertrofia-x3" class="hi-cta">
+            <span>Ver programa</span><span class="arr">→</span>
           </a>
         </div>
       </article>
@@ -1634,14 +1628,9 @@ section:first-of-type { border-top: none; }
         </div>
         <div class="hipert-card-body">
           <span class="hi-tag">// Hipertrofia</span>
-          <div class="hi-price">$35.000</div>
-          <ul class="hi-incl">
-            <li>Rutina PDF completa</li>
-            <li>Videos de técnica</li>
-            <li>Progresión estructurada</li>
-          </ul>
-          <a href="#contacto" class="hi-cta" data-plan-cta="Hipertrofia x4">
-            <span>Lo quiero</span><span class="arr">→</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
+          <a href="programa.html?plan=hipertrofia-x4" class="hi-cta">
+            <span>Ver programa</span><span class="arr">→</span>
           </a>
         </div>
       </article>
@@ -1657,14 +1646,9 @@ section:first-of-type { border-top: none; }
         </div>
         <div class="hipert-card-body">
           <span class="hi-tag">// Hipertrofia</span>
-          <div class="hi-price">$39.000</div>
-          <ul class="hi-incl">
-            <li>Rutina PDF completa</li>
-            <li>Videos de técnica</li>
-            <li>Progresión estructurada</li>
-          </ul>
-          <a href="#contacto" class="hi-cta" data-plan-cta="Hipertrofia x5">
-            <span>Lo quiero</span><span class="arr">→</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
+          <a href="programa.html?plan=hipertrofia-x5" class="hi-cta">
+            <span>Ver programa</span><span class="arr">→</span>
           </a>
         </div>
       </article>
@@ -1680,16 +1664,9 @@ section:first-of-type { border-top: none; }
         </div>
         <div class="hipert-card-body">
           <span class="hi-tag">// Hipertrofia</span>
-          <div class="hi-price">$45.000</div>
-          <div class="hi-price-old">$55.000</div>
-          <span class="hi-discount">−18% OFF</span>
-          <ul class="hi-incl">
-            <li>Rutina PDF completa</li>
-            <li>Videos de técnica</li>
-            <li>Progresión estructurada</li>
-          </ul>
-          <a href="#contacto" class="hi-cta" data-plan-cta="Hipertrofia x6">
-            <span>Lo quiero</span><span class="arr">→</span>
+          <p class="hi-desc">Rutina PDF, videos de técnica y progresión estructurada. Para hombre y mujer.</p>
+          <a href="programa.html?plan=hipertrofia-x6" class="hi-cta">
+            <span>Ver programa</span><span class="arr">→</span>
           </a>
         </div>
       </article>
